@@ -7,6 +7,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.Builder;
+import org.springframework.data.domain.Page;
+
+import java.util.List;
+
 @Getter
 @Setter
 @ToString
@@ -21,22 +25,19 @@ public class BoardDto {
 
     private String age;
 
-    /*
+
+    @Builder
     public  BoardDto(String title,String contents){
         this.title = title;
         this.contents = contents;
-    }*/
-
-    public String getTitle(){
-        return title;
     }
 
     public BoardEntity toEntity(){
-        BoardEntity boardEntity = new BoardEntity(title,contents);
+        BoardEntity boardEntity = BoardEntity.builder().title(title).build();
         //BoardEntity build = BoardEntity.builder()
         return boardEntity;
     }
-    public void setTitle(String title){
-        this.title= title;
-    }
+
+
+
 }

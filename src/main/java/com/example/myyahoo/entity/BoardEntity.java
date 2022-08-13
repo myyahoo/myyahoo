@@ -62,11 +62,10 @@ public class BoardEntity {
     @CreationTimestamp
     private LocalDateTime regdate;
 
+    @Builder
     public BoardEntity(String title, String contents) {
         this.title = title;
         this.contents = contents;
     }
-
-
 
 }

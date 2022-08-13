@@ -1,6 +1,7 @@
 package com.example.myyahoo.repository;
 
 import com.example.myyahoo.entity.BoardEntity;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -20,8 +21,6 @@ public interface BoardRepository extends JpaRepository<BoardEntity,Integer> {
     List<BoardEntity> findArticle(@Param("bbs_id") Integer bbs_id, @Param("email") String email,Pageable pageable);
 
     @Query("select b from BoardEntity b " )
-    List<BoardEntity> listAll(Pageable pageable);
-
-
+    Page<BoardEntity> listAll(Pageable pageable);
 
 }

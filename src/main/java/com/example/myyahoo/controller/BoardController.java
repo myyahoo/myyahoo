@@ -33,8 +33,7 @@ public class BoardController {
     public String list(@RequestParam(value = "page",required = true,defaultValue = "0") Integer page, Model model){
 
         System.out.println("dddd");
-        List<BoardDto> list = boardService.getList(page,2);
-
+        List<BoardDto> list = boardService.getList(page,5);
 
 
         model.addAttribute("list",list);
@@ -55,10 +54,11 @@ public class BoardController {
         // 이렇게 사용해선 안된다.
         System.out.println(boardDto.getTitle());
         System.out.println(boardDto.getContents());
-        String realPath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\files";
+        String realPath = System.getProperty("user.dir") + "/src/main/resources/static/files";
 
         //String realPath=servletContext.getRealPath("/resources/files");
         String today=new SimpleDateFormat("yyMMdd").format(new Date());
+
         String saveFolder=realPath+File.separator+today;
 
         File folder = new File(saveFolder);

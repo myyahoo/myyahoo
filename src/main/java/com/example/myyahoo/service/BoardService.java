@@ -4,6 +4,7 @@ import com.example.myyahoo.dto.BoardDto;
 import com.example.myyahoo.entity.BoardEntity;
 import com.example.myyahoo.repository.BoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -26,11 +27,14 @@ public class BoardService {
         Pageable pageable = (Pageable) PageRequest.of(page,size);
 
         //List<BoardEntity> boardEntityList = boardRepository.findArticle(1,"aa",pageable);
-        List<BoardEntity> boardEntityList = boardRepository.listAll(pageable);
+        //List<BoardEntity> boardEntityList = boardRepository.listAll(pageable);
+        Page<BoardEntity> boardEntityList = boardRepository.listAll(pageable);
 
+System.out.println(boardEntityList.getNumber());
         List<BoardDto> boardDtoList = new ArrayList<>();
 
         for(BoardEntity boardEntity : boardEntityList){
+            //System.out.println();
             //BoardDto boardDto = new BoardDto(board.getTitle(),board.getContents());
             BoardDto boardDto = new BoardDto();
             boardDto.setTitle(boardEntity.getTitle());

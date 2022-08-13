@@ -1,0 +1,20 @@
+CREATE TABLE `boards` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `bbs_id` smallint(6) DEFAULT NULL COMMENT ' 100 ',
+  `title` varchar(255) DEFAULT NULL,
+  `contents` text DEFAULT NULL,
+  `user_name` varchar(50) DEFAULT NULL,
+  `user_idx` int(10) unsigned DEFAULT NULL COMMENT 'user indexno',
+  `nick_name` varchar(50) DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `view_cnt` int(11) NOT NULL DEFAULT 0,
+  `write_ip` varchar(20) DEFAULT NULL,
+  `comments_cnt` smallint(6) NOT NULL DEFAULT 0,
+  `is_notice` tinyint(4) NOT NULL DEFAULT 0,
+  `images` varchar(1000) DEFAULT NULL COMMENT '  , ',
+  `thumbnail` varchar(300) DEFAULT NULL,
+  `regdate` datetime DEFAULT NULL,
+  `update_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `bbs_id` (`bbs_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb3;

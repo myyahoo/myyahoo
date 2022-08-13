@@ -1,0 +1,16 @@
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+목록
+<table>
+<tr th:each="val:${list}">
+    <td th:text="${val.title}"></td>
+    <td th:text="${val.contents}"></td>
+</tr>
+</table>
+<a href="/board/write">작성</a>
+</body>
+</html>

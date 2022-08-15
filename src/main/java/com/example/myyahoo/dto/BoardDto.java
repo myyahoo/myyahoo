@@ -26,7 +26,7 @@ public class BoardDto {
     private String age;
 
 
-    @Builder
+   @Builder
     public  BoardDto(String title,String contents){
         this.title = title;
         this.contents = contents;
@@ -37,7 +37,5 @@ public class BoardDto {
         //BoardEntity build = BoardEntity.builder()
         return boardEntity;
     }
-
-
 
 }

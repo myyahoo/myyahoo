@@ -23,4 +23,6 @@ public interface BoardRepository extends JpaRepository<BoardEntity,Integer> {
     @Query("select b from BoardEntity b " )
     Page<BoardEntity> listAll(Pageable pageable);
 
+    Page<BoardEntity> findAll(Pageable pageable);
+
 }

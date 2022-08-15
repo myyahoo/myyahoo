@@ -6,11 +6,29 @@
 <body>
 목록
 <table>
-<tr th:each="val:${list}">
-    <td th:text="${val.title}"></td>
-    <td th:text="${val.contents}"></td>
+<tr th:each="item:${list}">
+    <td th:text="${item.title}"></td>
+    <td th:text="${item.contents}"></td>
 </tr>
 </table>
+<div>
+    <p th:text="${list.totalPages}"></p><a href="/board/list?page=[[ ${list.totalPages} ]]">aaa</a>
+
+    [[ ${list.totalPages} ]]
+</div>
+<div class="pagenation type2 <?=($is_mobile=='y')?"only_mo":"hide_mo"?>">
+<a href="<?=SERVICE_URL?><?=$PAGE['PREV']['url']?>" class="prev"></a>
+<ul>
+    <?php foreach($PAGE["NO"] as $key=>$pages){?>
+    <li <?=($pages['no']==$page)?'class="on"':''?>>
+    <a href="<?=SERVICE_URL?><?=$pages['url']?>"><?=$pages['no']?></a>
+    </li>
+    <?php }?>
+</ul>
+<a href="<?=SERVICE_URL?><?=$PAGE['NEXT']['url']?>" class="next"></a>
+</div>
+
 <a href="/board/write">작성</a>
+
 </body>
 </html>

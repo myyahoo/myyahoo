@@ -4,12 +4,15 @@ import com.example.myyahoo.dto.BoardDto;
 import com.example.myyahoo.entity.BoardEntity;
 import com.example.myyahoo.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.persistence.Column;
 import javax.servlet.ServletContext;
@@ -28,16 +31,26 @@ public class BoardController {
     @Autowired
     ServletContext servletContext;
 
+    @Value("${spring.mvc.view.suffix}")
+    private String jspString;
+
+    @Value("${spring.datasource.username}")
+    private String dataUsername;
+
+
     //@ResponseBody
     @GetMapping("/board/list")
     public String list(@RequestParam(value = "page",required = true,defaultValue = "0") Integer page, Model model){
 
         System.out.println("dddd");
-        List<BoardDto> list = boardService.getList(page,5);
+        Page<BoardDto> list = boardService.getList(page,5);
 
 
-        model.addAttribute("list",list);
-        return "/list";
+        model.addAttribute("list",list.getContent());
+System.out.println(jspString);
+System.out.println(dataUsername);
+        //return new ModelAndView("/board/list");
+        return "board/list";
     }
 
     @GetMapping("/board/write")

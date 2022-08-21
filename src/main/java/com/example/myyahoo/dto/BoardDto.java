@@ -18,22 +18,25 @@ import java.util.List;
 @NoArgsConstructor
 
 public class BoardDto {
-    private  Integer id;
+    private Integer id;
     @NotNull
-    private  String titles;
-    private  String contents;
+    private String titles;
+    private String contents;
     private String age;
     private Integer user_idx;
 
     private LocalDateTime regdate;
 
+    private String images;
+
     @Builder
-    public  BoardDto(Integer id,String title,String contents,Integer user_idx,LocalDateTime regdate){
+    public  BoardDto(Integer id,String title,String contents,Integer user_idx,String images,LocalDateTime regdate){
         this.id=id;
         this.titles = title;
         this.contents = contents;
         this.user_idx = user_idx;
         this.regdate = regdate;
+        this.images = images;
     }
 
     public BoardDto(BoardEntity boardEntity){
@@ -44,7 +47,7 @@ public class BoardDto {
         this.regdate = boardEntity.getRegdate();
     }
     public BoardEntity toEntity(){
-        BoardEntity boardEntity = BoardEntity.builder().title(titles).contents(contents).user_idx(user_idx).build();
+        BoardEntity boardEntity = BoardEntity.builder().title(titles).contents(contents).user_idx(user_idx).images(images).build();
         //BoardEntity build = BoardEntity.builder()
         return boardEntity;
     }

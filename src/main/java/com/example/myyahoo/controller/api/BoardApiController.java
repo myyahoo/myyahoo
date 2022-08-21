@@ -10,7 +10,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import reactor.util.annotation.Nullable;
 
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -30,10 +35,33 @@ public class BoardApiController {
     }
 
     @PostMapping("board/save")
-    //public ResponseEntity<BoardDto> save(@RequestParam("titles") String titles){
-    public ResponseEntity<BoardDto> save(@RequestBody BoardDto boardDto){  //json 데이타를 받을때
+    public ResponseEntity<BoardDto> save(@RequestParam @Nullable MultipartFile image, @RequestParam("title") String title,
+                                         @RequestParam("contents") String contents
+                                        ) throws Exception{
+    //public ResponseEntity<BoardDto> save(@RequestBody BoardDto boardDto){  //json 데이타를 받을때
 
+        String fullFileName = "";
+        if(image!= null && !image.getOriginalFilename().isEmpty()){
+            String realPath = System.getProperty("user.dir") + "/src/main/resources/static/files";
+            String toDay    = new SimpleDateFormat("yyMMdd").format(new Date());
+            String saveFoler = realPath+File.separator+toDay;
+
+            File folder = new File(saveFoler);
+            if(!folder.exists()){
+                folder.mkdir();
+            }
+
+            File file = new File(image.getOriginalFilename());
+            String fileName = file.getName();
+            String ext = fileName.substring(fileName.lastIndexOf(".")+1);
+            fileName = System.currentTimeMillis()/1000+"."+ext;
+
+            image.transferTo(new File(saveFoler,fileName));
+            fullFileName = saveFoler+File.separator+fileName;
+            System.out.println(fullFileName);
+        }
+        BoardDto boardDto = BoardDto.builder().title(title).contents(contents).images(fullFileName).build();
         BoardDto response = boardService.write(boardDto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        return ResponseEntity.status(HttpStatus.CREATED).body(boardDto);
     }
 }

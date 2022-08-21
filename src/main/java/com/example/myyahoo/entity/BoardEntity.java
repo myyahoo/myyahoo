@@ -64,17 +64,18 @@ public class BoardEntity {
     private LocalDateTime regdate;
 
     @Builder
-    public BoardEntity(String title, String contents, String user_name, Integer user_idx, String nick_name, String email) {
+    public BoardEntity(String title, String contents, String user_name, Integer user_idx, String nick_name, String email,String images) {
         this.title = title;
         this.contents = contents;
         this.user_name = user_name;
         this.user_idx = user_idx;
         this.nick_name = nick_name;
         this.email = email;
+        this.images = images;
     }
 
     public BoardDto toDto(){
-        return BoardDto.builder().title(this.title).contents(this.contents).id(this.id).build();
+        return BoardDto.builder().title(this.title).contents(this.contents).id(this.id).images(this.images).build();
     }
 
     @Override

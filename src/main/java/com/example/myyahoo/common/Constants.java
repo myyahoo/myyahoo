@@ -9,9 +9,11 @@ public class Constants {
 
     //Tiles xml 경로
     public final static String[] TILES_LAYOUT_XML_PATH = {
-            "WEB-INF/tiles.xml"
+            "/WEB-INF/tiles.xml"
     };
 
     //Runtime에서 JSP의 refresh 적용 여부
     public final static boolean REFRESH_JSP_ON_RUNTIME = true;
+
+    public final static String SESSION_ID="member";
 }

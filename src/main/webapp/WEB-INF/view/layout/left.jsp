@@ -1,3 +1,6 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
     <div class="col-lg-2 col-md-2 col-sm-3" id="gnb-menu">
 
       <div class="btn-write"><button type="button" class="btn btn-primary btn-block" onclick="document.location.href='/news/create'"><span class="icon-write"></span>기사 작성</button></div>

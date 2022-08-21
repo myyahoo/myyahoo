@@ -1,0 +1,39 @@
+1. 구조
+package > common,config,controller,dto,entity,interceptor,repository,service
+
+resources > application.properties, templates,static.files(파일 업로드)
+
+tiles: tiles. xml , application.properties 에 설정
+
+css : webapp > resources > css
+view : webapp > WEB-INF > view > jsp
+
+2. @component 는  @controller, @service , @entity 의 상위 개념
+
+-
+
+1. 인증 및 controller 별 접근
+   interceptor > config/WebConfig
+   redis > config/RedisConfig
+
+2. file upload
+
+3. session 공통 사용
+   service > AuthService
+
+4. 상수
+   common/Constants
+
+
+5. tomcat 배포
+ - build.gradle  아래내용 추가
+   apply plugin: 'war'
+   bootWar {
+   	archiveName("myyahoo.war")
+   }
+ - 우측 코끼리 build > bootWar 선택
+
+ - tomcat > webapps에 파일 카피
+
+ - tomcat conf/server.xml 에서 document root 수정
+   <Context path="" docBase="/usr/local/tomcat9/webapps/myyahoo" reloadable="true"/>

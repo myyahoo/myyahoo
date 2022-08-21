@@ -8,13 +8,17 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.redis.connection.ReactiveListCommands;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
+import javax.servlet.http.HttpSession;
 import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class BoardService {
@@ -22,21 +26,20 @@ public class BoardService {
     @Autowired
     BoardRepository boardRepository;
 
-
     public Page<BoardDto> getList(int page, int size){
 
-        //Pageable pageable = (Pageable) PageRequest.of(page,size ,Sort.by(Sort.Direction.DESC, "regdate"));
-        Pageable pageable = (Pageable) PageRequest.of(page,size);
+        Pageable pageable = (Pageable) PageRequest.of(page,size ,Sort.by(Sort.Direction.DESC, "id"));
+        //Pageable pageable = (Pageable) PageRequest.of(page,size);
 
         //List<BoardEntity> boardEntityList = boardRepository.findArticle(1,"aa",pageable);
         //List<BoardEntity> boardEntityList = boardRepository.listAll(pageable);
         Page<BoardEntity> boardEntityList = boardRepository.findAll(pageable);
 
-//System.out.println(boardEntityList.getNumber());
         Page<BoardDto> boardDtoList = boardEntityList.map(obj->
-                BoardDto.builder()
+                BoardDto.builder().id(obj.getId())
                         .title(obj.getTitle())
                         .contents(obj.getContents())
+                        .regdate(obj.getRegdate())
                         .build());
         //Page<BoardDto> boardDtoList = new ArrayList<>();
 
@@ -53,12 +56,34 @@ public class BoardService {
         return boardDtoList;
     }
 
-    public void write(BoardDto boardDto){
-        System.out.println(boardDto.getContents());
-        boardRepository.save(boardDto.toEntity());
-
-
+    public BoardDto write(BoardDto boardDto){
+        //System.out.println(boardDto.getContents());
+        BoardEntity boardEntity = boardRepository.save(boardDto.toEntity());
+        //System.out.println(boardEntity.getId());
+        //System.out.println(boardEntity.toString());
+        return boardEntity.toDto();
     }
 
+    public BoardDto getOne(int id){
+
+        BoardEntity boardEntity = boardRepository.getReferenceById(id);
+        //BoardEntity boardEntity = boardRepository.findById(id).orElseThrow(()->new IllegalArgumentException("해당 글이 존재하지 않습니다"));
+        if(boardEntity == null ) {
+            return null;
+        }else {
+            BoardDto boardDto = new BoardDto(boardEntity);
+            return boardDto;
+        }
+    }
+
+    @Transactional
+    public void update(BoardDto boardDto){
+
+        //BoardEntity boardEntity = boardRepository.findById(boardDto.getId()).orElseThrow(()->new IllegalArgumentException("해당 글이 존재하지 않습니다"));
+        boardRepository.update(boardDto.getTitles(),boardDto.getContents(),boardDto.getId());
+    }
+    public void deleteById(int id){
+        boardRepository.deleteById(id);
+    }
 
 }

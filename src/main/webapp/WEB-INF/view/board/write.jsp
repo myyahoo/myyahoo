@@ -1,17 +1,16 @@
-<script src="/js/ckeditor/ckeditor.js"></script>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<script src="/resources/js/ckeditor/ckeditor.js"></script>
 <script>
 var img_name = new Array();
 $(function(){
     CKEDITOR.replace( 'bbs_review',
     {
         height:"400", width:"100%",
-        filebrowserUploadUrl : '/imageupload/board_upload',
+        filebrowserUploadUrl : '/board/image_upload',
         extraPlugins: 'image2'
-
     });
-
 });
-
 function _onSubmit(){
     if(!$("#title").val()){
         alert('제목을 입력해주세요');
@@ -22,8 +21,6 @@ function _onSubmit(){
 function goList(){
     document.location.href="<?=$lurl?>";
 }
-
-
 </script>
 
 <div class="col-lg-10 col-md-10 col-sm-9" id="contents-box">
@@ -33,7 +30,7 @@ function goList(){
 <h1>편집국 <small>편집국 전용 게시판 입니다.</small></h1>
 </div>
 
-<form name=frm method=post action="/bbs_manage/article_save" >
+<form name=frm method=post action="/board/save" enctype="multipart/form-data">
       <div class="panel panel-default">
         <div class="panel-heading">뉴스룸</div>
         <div class="panel-body">
@@ -41,7 +38,7 @@ function goList(){
         <div class="form-group">
               <label for="" class="col-md-2 col-sm-2 col-xs-2 control-label">제목</label>
               <div class="col-md-8 col-sm-10 col-xs-10">
-                <input type="text" id="title" name='title' class="form-control" placeholder="제목을 입력해 주세요">
+                <input type="text" id="title" name='titles' class="form-control" placeholder="제목을 입력해 주세요">
               </div>
             </div>
             <div class="form-group">
@@ -52,25 +49,10 @@ function goList(){
 
             </div>
           <!-- editor -->
-
-            <div class="form-group">
-              <label for="" class="col-md-2 col-sm-2 col-xs-2 control-label">카테고리</label>
-              <div class="col-md-2 col-sm-2 col-xs-3">
-                <select class="form-control" name='bbs_id'>
-                    <?php foreach($board_list as $val){ ?>
-                    <option value="<?=$val['bbs_id']?>" <?=($bbs_id==$val['bbs_id'])?"selected":""?>>
-                        <?=$val['bbs_name']?>
-                    </option>
-                    <?php } ?>
-                </select>
-              </div>
-            </div>
-
             <div class="form-group editor">
               <div class="col-md-10 col-sm-12 col-xs-12"><textarea class="ckeditor" name="contents"></textarea></div>
             </div>
             <!-- .editor -->
-
           </div>
         </div>
       </div>

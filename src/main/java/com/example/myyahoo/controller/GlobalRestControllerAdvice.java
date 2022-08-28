@@ -33,7 +33,6 @@ public class GlobalRestControllerAdvice {
         return errorAttributes;
 
     }
-
     @ExceptionHandler(ConstraintViolationException.class)
     protected ResponseEntity handelXXXXXX(ConstraintViolationException e){
 

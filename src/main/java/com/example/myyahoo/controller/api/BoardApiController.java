@@ -10,11 +10,15 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import reactor.util.annotation.Nullable;
 
+import javax.validation.Valid;
 import java.io.File;
+import java.io.IOException;
+import java.text.Bidi;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -36,10 +40,12 @@ public class BoardApiController {
     }
 
     @PostMapping("board/save")
-    public ResponseEntity<BoardDto> save(@RequestParam @Nullable MultipartFile image, @RequestParam("title") String title,
-                                         @RequestParam("contents") String contents
-                                        ) throws Exception{
+    public ResponseEntity save(@ModelAttribute @Valid BoardDto boardDto, BindingResult bindingResult) throws IOException {
     //public ResponseEntity<BoardDto> save(@RequestBody BoardDto boardDto){  //json 데이타를 받을때
+
+        MultipartFile image = boardDto.getFile();
+        String title        = boardDto.getTitles();
+        String contents     = boardDto.getContents();
 
         String fullFileName = "";
         if(image!= null && !image.getOriginalFilename().isEmpty()){
@@ -61,9 +67,9 @@ public class BoardApiController {
             fullFileName = saveFoler+File.separator+fileName;
             System.out.println(fullFileName);
         }
-        BoardDto boardDto = BoardDto.builder().title(title).contents(contents).images(fullFileName).build();
-        BoardDto response = boardService.write(boardDto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(boardDto);
+        BoardDto oardDto = BoardDto.builder().title(title).contents(contents).images(fullFileName).build();
+        BoardDto response = boardService.write(oardDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(oardDto);
     }
 
     @GetMapping("/board/view/{id}")

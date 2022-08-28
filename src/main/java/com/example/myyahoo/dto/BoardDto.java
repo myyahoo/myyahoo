@@ -8,7 +8,9 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.Builder;
 import org.springframework.data.domain.Page;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -18,7 +20,8 @@ import java.util.List;
 @NoArgsConstructor
 public class BoardDto {
     private Integer id;
-    @NotNull
+
+    @NotBlank
     private String titles;
     private String contents;
     private String age;
@@ -28,6 +31,9 @@ public class BoardDto {
     private LocalDateTime regdate;
 
     private String images;
+
+
+    private MultipartFile file;
 
     @Builder
     public  BoardDto(Integer id,String title,String contents,Integer user_idx,String images,LocalDateTime regdate){

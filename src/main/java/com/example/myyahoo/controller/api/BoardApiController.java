@@ -3,6 +3,7 @@ package com.example.myyahoo.controller.api;
 import com.example.myyahoo.dto.BoardDto;
 import com.example.myyahoo.entity.BoardEntity;
 import com.example.myyahoo.service.BoardService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
@@ -17,12 +18,12 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-
+@AllArgsConstructor
 @RestController
 @RequestMapping("/api")
 public class BoardApiController {
-    @Autowired
-    BoardService boardService;
+
+    private BoardService boardService;
 
     @GetMapping("board/list")
     public ResponseEntity<List> list(@RequestParam(value = "page",required = true,defaultValue = "0") Integer page){
@@ -63,5 +64,14 @@ public class BoardApiController {
         BoardDto boardDto = BoardDto.builder().title(title).contents(contents).images(fullFileName).build();
         BoardDto response = boardService.write(boardDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(boardDto);
+    }
+
+    @GetMapping("/board/view/{id}")
+    public ResponseEntity<BoardDto> view(@PathVariable("id") String id){
+        BoardDto boardDto = boardService.getOne(Integer.parseInt(id));
+        HttpHeaders headers = new HttpHeaders();
+
+        return new ResponseEntity<BoardDto>(boardDto,headers, HttpStatus.valueOf(200));
+
     }
 }

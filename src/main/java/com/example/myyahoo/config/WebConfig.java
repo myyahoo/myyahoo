@@ -1,8 +1,12 @@
 package com.example.myyahoo.config;
 
 import com.example.myyahoo.common.Constants;
+import com.example.myyahoo.interceptor.ApiAuthInterceptor;
+import com.example.myyahoo.interceptor.ApiAuthTokenInterceptor;
 import com.example.myyahoo.interceptor.AuthInterceptor;
 import lombok.RequiredArgsConstructor;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.mybatis.spring.SqlSessionFactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,6 +31,11 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Autowired
     private  AuthInterceptor authInterceptor;
+    @Autowired
+    private ApiAuthInterceptor apiAuthInterceptor;
+
+    @Autowired
+    private ApiAuthTokenInterceptor apiAuthTokenInterceptor;
 
     @Bean(name = "tilesConfigure")
     public TilesConfigurer tilesConfigurer() {
@@ -47,5 +56,19 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addInterceptor(authInterceptor)
                 .addPathPatterns()
                 .excludePathPatterns(authInterceptor.authExPath);
+
+        registry.addInterceptor(apiAuthInterceptor)
+                .addPathPatterns(apiAuthInterceptor.authPath);
+
+        registry.addInterceptor(apiAuthTokenInterceptor)
+                .addPathPatterns(apiAuthTokenInterceptor.authPath)
+                .excludePathPatterns(apiAuthTokenInterceptor.authExPath);
     }
+/*
+    @Bean
+    public SqlSessionFactory sqlSessionFactory() throws Exception {
+        SqlSessionFactoryBean factoryBean = new SqlSessionFactoryBean();
+        factoryBean.setDataSource(dataSource());
+        return factoryBean.getObject();
+    }*/
 }

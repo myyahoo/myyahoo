@@ -1,5 +1,6 @@
 package com.example.myyahoo.entity;
 
+import com.example.myyahoo.dto.UserDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,5 +28,19 @@ public class UserEntity {
         this.id=id;
         this.email = email;
         this.user_pwd= user_pwd;
+    }
+
+    public UserDto toDto(){
+        return UserDto.builder().email(email).id(id).user_pwd(user_pwd).build();
+    }
+
+    @Override
+    public String toString() {
+        return "UserEntity{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", user_pwd='" + user_pwd + '\'' +
+                ", lastdate='" + lastdate + '\'' +
+                '}';
     }
 }

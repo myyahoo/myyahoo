@@ -2,23 +2,15 @@ package com.example.myyahoo.service;
 
 import com.example.myyahoo.dto.BoardDto;
 import com.example.myyahoo.entity.BoardEntity;
+import com.example.myyahoo.exceptions.BoardNotFoundException;
 import com.example.myyahoo.repository.BoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.redis.connection.ReactiveListCommands;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-
-import javax.servlet.http.HttpSession;
-import java.sql.Array;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
 
 @Service
 public class BoardService {
@@ -69,7 +61,9 @@ public class BoardService {
         BoardEntity boardEntity = boardRepository.getReferenceById(id);
         //BoardEntity boardEntity = boardRepository.findById(id).orElseThrow(()->new IllegalArgumentException("해당 글이 존재하지 않습니다"));
         if(boardEntity == null ) {
-            return null;
+            throw new BoardNotFoundException("존재 하지 않는 게시물입니다.");
+            //throw new MemberNotFoundException("존재하지 않는 회원입니다.");
+            //return null;
         }else {
             BoardDto boardDto = new BoardDto(boardEntity);
             return boardDto;

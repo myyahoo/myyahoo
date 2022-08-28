@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mappers.user-mapper">
+    <select id="getUserList" resultType="com.example.myyahoo.entity.UserEntity">
+        SELECT
+        email,id
+        FROM users
+        <if test="keyword != null">
+            where email like concat('%',#{keyword},'%')
+        </if>
+        order by id desc
+        limit #{startNo},#{listOffset}
+    </select>
+
+    <select id="getUserByEmail" parameterType="String" resultType="com.example.myyahoo.entity.UserEntity">
+        select * from users where email=#{email}
+    </select>
+    <select id="getUserCnt" resultType="Integer">
+        select count(id)  from users
+        <if test="keyword != null">
+            where email like concat('%',#{keyword},'%')
+        </if>
+    </select>
+    <select id="getOne" parameterType="int" resultType="com.example.myyahoo.entity.UserEntity">
+        select email,id from users where id=#{id}
+    </select>
+
+    <insert id="insertUser" parameterType="com.example.myyahoo.entity.UserEntity">
+        insert into users set email=#{email}
+    </insert>
+</mapper>

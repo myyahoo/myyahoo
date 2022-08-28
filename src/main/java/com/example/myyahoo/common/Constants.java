@@ -16,4 +16,8 @@ public class Constants {
     public final static boolean REFRESH_JSP_ON_RUNTIME = true;
 
     public final static String SESSION_ID="member";
+
+    public final static Integer listOffset = 2;
+
+    public final static String SECREATE_KEY = "1234abcdef";
 }

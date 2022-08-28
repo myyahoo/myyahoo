@@ -16,7 +16,6 @@ import java.util.List;
 @Setter
 @ToString
 @NoArgsConstructor
-
 public class BoardDto {
     private Integer id;
     @NotNull
@@ -24,6 +23,7 @@ public class BoardDto {
     private String contents;
     private String age;
     private Integer user_idx;
+
 
     private LocalDateTime regdate;
 

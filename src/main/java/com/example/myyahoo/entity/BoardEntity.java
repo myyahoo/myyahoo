@@ -13,7 +13,6 @@ import java.time.LocalDateTime;
 @Getter
 @Table(name="boards")
 @NoArgsConstructor
-
 public class BoardEntity {
 
     @Id

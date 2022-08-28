@@ -4,6 +4,7 @@ import com.example.myyahoo.dto.BoardDto;
 import com.example.myyahoo.entity.BoardEntity;
 import com.example.myyahoo.service.AuthService;
 import com.example.myyahoo.service.BoardService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -24,6 +25,7 @@ import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+@Slf4j
 @Controller
 public class BoardController {
 
@@ -43,9 +45,11 @@ public class BoardController {
     //@ResponseBody
     @GetMapping("/board/list")
     public String list(@RequestParam(value = "page",required = true,defaultValue = "0") Integer page, Model model){
+        log.debug("page = {}", page);
 
         Page<BoardDto> list = boardService.getList(page,15);
         String userIdx = authService.getUserId();
+
 
         model.addAttribute("list",list.getContent());
         model.addAttribute("userIdx",userIdx);
@@ -59,7 +63,7 @@ public class BoardController {
         BoardDto boardDto = boardService.getOne(Integer.parseInt(id));
 
         if(boardDto == null){
-            return "error/error";
+            //return "error/error";
         }
         String user_idx = authService.getUserId();
 

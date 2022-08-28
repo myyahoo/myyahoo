@@ -1,6 +1,5 @@
 package com.example.myyahoo.dao;
 
-
 import com.example.myyahoo.common.Constants;
 import com.example.myyahoo.entity.UserEntity;
 import org.apache.catalina.User;

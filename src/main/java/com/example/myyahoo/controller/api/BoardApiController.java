@@ -2,6 +2,7 @@ package com.example.myyahoo.controller.api;
 
 import com.example.myyahoo.dto.BoardDto;
 import com.example.myyahoo.entity.BoardEntity;
+import com.example.myyahoo.service.BoardApiService;
 import com.example.myyahoo.service.BoardService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,11 +28,11 @@ import java.util.List;
 @RequestMapping("/api")
 public class BoardApiController {
 
-    private BoardService boardService;
-
+    private BoardApiService boardApiService
     @GetMapping("board/list")
-    public ResponseEntity<List> list(@RequestParam(value = "page",required = true,defaultValue = "0") Integer page){
-        Page<BoardDto> list = boardService.getList(page,15);
+    public ResponseEntity<List> list(@RequestParam(value = "page",required = true,defaultValue = "0") Integer page,
+                                     @RequestParam("keyword") String keyword,@ModelAttribute BoardDto boardDto){
+        Page<BoardDto> list = boardApiService.getList(page,15);
         HttpHeaders headers = new HttpHeaders();
         //return "hello";
         //return list.getContent();

@@ -3,8 +3,8 @@
 <mapper namespace="mappers.board-mapper">
     <select id="getList" resultType="com.example.myyahoo.entity.BoardEntity">
         SELECT
-        email,id
-        FROM users
+        *
+        FROM boards
         <if test="keyword != null">
             where title like concat('%',#{keyword},'%')
         </if>
@@ -12,14 +12,25 @@
         limit #{startNo},#{listOffset}
     </select>
 
-    <select id="getOne" parameterType="String" resultType="com.example.myyahoo.entity.BoardEntity">
+    <select id="getOne" parameterType="Integer" resultType="com.example.myyahoo.entity.BoardEntity">
         select * from boards where id=#{id}
     </select>
 
-    <select id="getTotalCnt" resultType="int">
+    <select id="getTotalCnt" resultType="Integer">
         select count(id) from boards
         <if test="keyword != null">
             where title like concat('%',#{keyword},'%')
         </if>
     </select>
+    <insert id="insertBoard" parameterType="com.example.myyahoo.entity.BoardEntity" useGeneratedKeys="true" keyProperty="id">
+        insert into boards set title=#{title},contents=#{contents}
+    </insert>
+
+    <delete id="deleteBoard" parameterType="Integer">
+        delete from boards where id=#{id}
+    </delete>
+
+    <update id="updateBoard" parameterType="com.example.myyahoo.entity.BoardEntity">
+        update boards set title=#{title},contents=#{contents} where id=#{id}
+    </update>
 </mapper>

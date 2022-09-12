@@ -53,7 +53,7 @@ public class BoardDto {
         this.regdate = boardEntity.getRegdate();
     }
     public BoardEntity toEntity(){
-        BoardEntity boardEntity = BoardEntity.builder().title(titles).contents(contents).user_idx(user_idx).images(images).build();
+        BoardEntity boardEntity = BoardEntity.builder().id(id).title(titles).contents(contents).user_idx(user_idx).images(images).build();
         //BoardEntity build = BoardEntity.builder()
         return boardEntity;
     }

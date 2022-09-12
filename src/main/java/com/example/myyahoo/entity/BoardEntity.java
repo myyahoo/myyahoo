@@ -63,7 +63,8 @@ public class BoardEntity {
     private LocalDateTime regdate;
 
     @Builder
-    public BoardEntity(String title, String contents, String user_name, Integer user_idx, String nick_name, String email,String images) {
+    public BoardEntity(Integer id,String title, String contents, String user_name, Integer user_idx, String nick_name, String email,String images) {
+        this.id = id;
         this.title = title;
         this.contents = contents;
         this.user_name = user_name;

@@ -10,6 +10,7 @@ JPA 사용
 ### API 
 dao/xml  mapper 사용
 
+앞단에 Token interceptor 사용
 
 
   

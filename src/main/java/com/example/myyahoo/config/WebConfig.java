@@ -18,7 +18,7 @@ import org.springframework.web.servlet.view.tiles3.TilesView;
 import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
 
 /**
- *  configuration 은 Bean에 등록하는것.  프로젝트 커질수로 Bean xml에 등록이 힘들어지므로 @Configuration 사용해서 Bean 등록
+ *  configuration component를 포함하고있어서  Bean에 자동등록.  프로젝트 커질수로 Bean xml에 등록이 힘들어지므로 @Configuration 사용해서 Bean 등록
  *  Spring Bean 등록 방법(@Bean, @Configuration, @Component)
  *  @Configuration 안에서 @Bean을 사용해야 싱글톤을 보장받을 수 있으므로 @Bean 어노테이션은 반드시 @Configuration과 함께 사용해주어야 한다.
  *  예를 들어 우리가 객체를 Json 메세지로 변경하기 위해 Gson과 같은 외부 라이브러리를 사용한다고 하자.

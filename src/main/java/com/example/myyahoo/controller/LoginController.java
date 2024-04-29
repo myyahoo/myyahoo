@@ -30,6 +30,7 @@ public class LoginController {
     @Autowired
     AuthService authService;
 
+
     @GetMapping("/login")
     public String login(){
         String userIdx = authService.getUserId();

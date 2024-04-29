@@ -42,6 +42,7 @@ public class BoardController {
     private String dataUsername;
 
 
+
     //@ResponseBody
     @GetMapping("/board/list")
     public String list(@RequestParam(value = "page",required = true,defaultValue = "0") Integer page, Model model){
@@ -74,12 +75,13 @@ public class BoardController {
     }
     @GetMapping("/board/write")
     public String write(){
-        String userId = authService.getUserId();
+        return "board/write";
+        /*String userId = authService.getUserId();
         if(userId == null || userId.isEmpty()){
             return "redirect:/login";
         }else{
             return "board/write";
-        }
+        }*/
     }
 
     @PostMapping("/board/save")
